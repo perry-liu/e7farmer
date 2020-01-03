@@ -1,2 +1,5 @@
-#env files
+# venv files
 venv/
+
+# .idea files
+.ideas/
