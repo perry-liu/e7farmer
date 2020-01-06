@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f39decd8-2744-4cc6-83a0-91729d297b15" name="Default Changelist" comment="" />
+    <list default="true" id="f39decd8-2744-4cc6-83a0-91729d297b15" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adventure_farm.py" beforeDir="false" afterPath="$PROJECT_DIR$/adventure_farm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/area_click.png" beforeDir="false" afterPath="$PROJECT_DIR$/area_click.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/arena_clear.py" beforeDir="false" afterPath="$PROJECT_DIR$/arena_clear.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper/helper_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hunt_farm.py" beforeDir="false" afterPath="$PROJECT_DIR$/hunt_farm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_click.png" beforeDir="false" afterPath="$PROJECT_DIR$/image_click.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/image_strings.py" beforeDir="false" afterPath="$PROJECT_DIR$/image_strings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lobby_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/lobby_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_screenshot.png" beforeDir="false" afterPath="$PROJECT_DIR$/my_screenshot.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.png" beforeDir="false" afterPath="$PROJECT_DIR$/result.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_area.png" beforeDir="false" afterPath="$PROJECT_DIR$/test_area.png" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +28,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1VNhOcN9Xe5DNKTIjhKNudkZrkP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -34,7 +52,7 @@
       <recent name="C:\Users\Perry Liu\PycharmProjects\EpicSevenAutoFarmer\venv" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.AdventureFarm">
+  <component name="RunManager" selected="Python.ArenaClear">
     <configuration name="AdventureFarm" type="PythonConfigurationType" factoryName="Python">
       <module name="EpicSevenAutoFarmer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,9 +138,9 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.AdventureFarm" />
       <item itemvalue="Python.ArenaClear" />
       <item itemvalue="Python.HuntFarm" />
-      <item itemvalue="Python.AdventureFarm" />
       <item itemvalue="Python.testEnv" />
     </list>
   </component>
@@ -166,30 +184,30 @@
     </state>
     <state x="699" y="305" key="FileChooserDialogImpl/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577176021737" />
     <state x="2619" y="311" key="FileChooserDialogImpl/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1577239102278" />
-    <state width="1192" height="234" key="GridCell.Tab.0.bottom" timestamp="1578024179570">
+    <state width="1416" height="125" key="GridCell.Tab.0.bottom" timestamp="1578267813386">
       <screen x="1920" y="0" width="1920" height="1060" />
     </state>
-    <state width="1078" height="234" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1577991997082" />
-    <state width="1078" height="234" key="GridCell.Tab.0.bottom/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577999355822" />
-    <state width="1192" height="234" key="GridCell.Tab.0.bottom/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578024179570" />
-    <state width="1192" height="234" key="GridCell.Tab.0.center" timestamp="1578024179570">
+    <state width="1180" height="125" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1578256258525" />
+    <state width="1385" height="338" key="GridCell.Tab.0.bottom/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1578182449431" />
+    <state width="1416" height="125" key="GridCell.Tab.0.bottom/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578267813386" />
+    <state width="1416" height="125" key="GridCell.Tab.0.center" timestamp="1578267813386">
       <screen x="1920" y="0" width="1920" height="1060" />
     </state>
-    <state width="1078" height="234" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1577991997082" />
-    <state width="1078" height="234" key="GridCell.Tab.0.center/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577999355822" />
-    <state width="1192" height="234" key="GridCell.Tab.0.center/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578024179570" />
-    <state width="1192" height="234" key="GridCell.Tab.0.left" timestamp="1578024179570">
+    <state width="1180" height="125" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1578256258525" />
+    <state width="1385" height="338" key="GridCell.Tab.0.center/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1578182449431" />
+    <state width="1416" height="125" key="GridCell.Tab.0.center/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578267813386" />
+    <state width="1416" height="125" key="GridCell.Tab.0.left" timestamp="1578267813386">
       <screen x="1920" y="0" width="1920" height="1060" />
     </state>
-    <state width="1078" height="234" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1577991997082" />
-    <state width="1078" height="234" key="GridCell.Tab.0.left/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577999355822" />
-    <state width="1192" height="234" key="GridCell.Tab.0.left/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578024179570" />
-    <state width="1192" height="234" key="GridCell.Tab.0.right" timestamp="1578024179570">
+    <state width="1180" height="125" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1578256258525" />
+    <state width="1385" height="338" key="GridCell.Tab.0.left/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1578182449431" />
+    <state width="1416" height="125" key="GridCell.Tab.0.left/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578267813386" />
+    <state width="1416" height="125" key="GridCell.Tab.0.right" timestamp="1578267813386">
       <screen x="1920" y="0" width="1920" height="1060" />
     </state>
-    <state width="1078" height="234" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1577991997082" />
-    <state width="1078" height="234" key="GridCell.Tab.0.right/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577999355822" />
-    <state width="1192" height="234" key="GridCell.Tab.0.right/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578024179570" />
+    <state width="1180" height="125" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1578256258525" />
+    <state width="1385" height="338" key="GridCell.Tab.0.right/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1578182449431" />
+    <state width="1416" height="125" key="GridCell.Tab.0.right/1920.0.1920.1060/0.0.1920.1040@1920.0.1920.1060" timestamp="1578267813386" />
     <state width="1151" height="219" key="GridCell.Tab.1.bottom" timestamp="1577840184814">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -210,10 +228,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="443" y="241" key="SettingsEditor/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577589586947" />
-    <state x="661" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1577908215799">
+    <state x="661" y="345" key="com.intellij.ide.util.TipDialog" timestamp="1578057312088">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="661" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577908215799" />
+    <state x="661" y="345" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578057312088" />
     <state x="661" y="345" key="com.intellij.ide.util.TipDialog/1920.0.1920.1060/0.0.1920.1040@0.0.1920.1040" timestamp="1577099488263" />
     <state x="599" y="163" width="736" height="804" key="find.popup" timestamp="1577600522056">
       <screen x="0" y="0" width="1920" height="1040" />

@@ -12,6 +12,7 @@ def dispatch_missions():
 
 
 def lobby_to_adventure():
+    # TODO
     return
 
 
@@ -24,6 +25,7 @@ def lobby_to_world_adventure():
     find_and_click_image(READY_IMG)
     find_and_click_image(SELECT_TEAM_IMG)
     return
+
 
 def lobby_to_sidestory():
     dispatch_missions()

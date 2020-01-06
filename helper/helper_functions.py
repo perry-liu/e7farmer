@@ -5,7 +5,6 @@ from image_strings import *
 
 DEFAULT_RANDOM_TIME = s.r(1, 1)
 
-DEFAULT_WAIT_TIME = 1
 WAIT_TIME_FOR_TRANSITIONS = 5
 
 
@@ -24,13 +23,13 @@ def click_image(image, pos, action="left", offset=8):
 def scroll(pos, direction):
     s.pyautogui.moveTo(pos)
     s.pyautogui.scroll(direction)
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
     s.pyautogui.scroll(direction)
 
 
 def scroll_and_find(pos, direction, img):
     scroll(pos, direction)
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
     return find_image(ARENA_FIGHT_IMG)
 
 
@@ -76,7 +75,7 @@ def find_and_click_image(img):
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
 
 
 def find_and_click_image_in_area(img, x, y):
@@ -89,7 +88,7 @@ def find_and_click_image_in_area(img, x, y):
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
 
 
 def click_if_is_not_selected(img):
@@ -104,14 +103,17 @@ def click_if_is_not_selected(img):
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
 
 
+# click position with random offset
 def click_pos(pos, action="left", offset=8):
     pyautogui.moveTo(r(pos[0], offset), r(pos[1], offset))
     pyautogui.click(button=action)
     return
 
+
+# click area randomly within area specified with margin buffers
 def click_area(x1, y1, x2, y2, action="left"):
     width = x2 - x1
     height = y2 - y1
@@ -136,7 +138,7 @@ def stage_clear(count_dict):
         if count_dict:
             count_dict['failed_runs'] = count_dict['failed_runs'] + 1
         print("stage actually failed")
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
     return True
     # pos = s.imagesearch(STAGE_CLEAR_IMG)
     # print("Looking for stage clear.png ...")
@@ -164,7 +166,7 @@ def stage_start_checks(replenish_energy, count_dict={}):
     # high combat power check
     if find_image(BATTLE_GUIDE_IMG):
         find_and_click_image(CONFIRM_IMG)
-        time.sleep(DEFAULT_WAIT_TIME)
+        time.sleep(DEFAULT_RANDOM_TIME)
 
 
 def energy_check(replenish_energy, count_dict):
@@ -179,7 +181,7 @@ def energy_check(replenish_energy, count_dict):
         #     find_and_click_image(START_IMG)
         #     refresh_count = refresh_count + 1
 
-        time.sleep(DEFAULT_WAIT_TIME)
+        time.sleep(DEFAULT_RANDOM_TIME)
     return count_dict
 
 
@@ -196,7 +198,7 @@ def stage_end_checks(refill_fodder=False):
         # check friendship
         if find_image(FRIENDSHIP_LVL_INCREASE_IMG):
             find_and_click_image(TAP_TO_CLOSE_IMG)
-        time.sleep(DEFAULT_WAIT_TIME)
+        time.sleep(DEFAULT_RANDOM_TIME)
 
 
 def team_select(team_img):
