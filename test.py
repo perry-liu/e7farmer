@@ -1,6 +1,7 @@
 import pyautogui
 import time
 from helper.helper_functions import *
+from adventure_farm import *
 
 
 DEFAULT_RANDOM_TIME = r(1, 1)
@@ -26,16 +27,26 @@ WAIT_TIME_FOR_TRANSITIONS = 5
 # find_and_click_image("lobby_transparent.png")
 # time.sleep(WAIT_TIME_FOR_TRANSITIONS)
 # lobby_to_sidestory()
-find_and_click_image(BATTLE_INVENTORY_IMG)
-find_and_click_image(FARM_FODDER_STAGE1_IMG)
-find_and_click_image(CONFIRM_IMG)
-time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-find_and_click_image(BATTLE_INVENTORY_IMG)
-find_and_click_image(FARM_FODDER_STAGE2_IMG)
-find_and_click_image(CONFIRM_IMG)
-time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-find_and_click_image(BATTLE_INVENTORY_IMG)
-find_and_click_image(FARM_FODDER_STAGE3_IMG)
-find_and_click_image(CONFIRM_IMG)
-time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-# find_and_click_image_in_area(REPLACE_HERO_IMG, 790, 480)
+
+
+
+# find_and_click_image(BATTLE_INVENTORY_IMG)
+# find_and_click_image(FARM_FODDER_STAGE1_IMG)
+# find_and_click_image(CONFIRM_IMG)
+# time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+# find_and_click_image(BATTLE_INVENTORY_IMG)
+# find_and_click_image(FARM_FODDER_STAGE2_IMG)
+# find_and_click_image(CONFIRM_IMG)
+# time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+# find_and_click_image(BATTLE_INVENTORY_IMG)
+# find_and_click_image(FARM_FODDER_STAGE3_IMG)
+# find_and_click_image(CONFIRM_IMG)
+# time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+
+
+# promote_fodder()
+
+
+replace_fodder(2)
+
+# print(find_image(PROMOTION_IMG))

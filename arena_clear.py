@@ -26,7 +26,7 @@ def arena_clear():
 
 
 def clear_all():
-    while find_image(ARENA_FIGHT_IMG) or scroll_and_find(find_and_click_image(SKYSTONE_IMG), -1, ARENA_FIGHT_IMG):
+    while find_image(ARENA_FIGHT_IMG) or scroll_and_find(find_image(SKYSTONE_IMG), ARENA_FIGHT_IMG, -1):
         arena_clear()
     return
 

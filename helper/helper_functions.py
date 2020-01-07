@@ -11,13 +11,9 @@ WAIT_TIME_FOR_TRANSITIONS = 5
 def find_image(img, precision=0.8):
     pos = s.imagesearch(img, precision)
     if pos[0] != -1:
-        return True
+        return pos
     else:
         return False
-
-
-def click_image(image, pos, action="left", offset=8):
-    return s.click_image(image, pos, action, offset)
 
 
 def scroll(pos, direction):
@@ -27,10 +23,10 @@ def scroll(pos, direction):
     s.pyautogui.scroll(direction)
 
 
-def scroll_and_find(pos, direction, img):
+def scroll_and_find(pos, img, direction):
     scroll(pos, direction)
     time.sleep(DEFAULT_RANDOM_TIME)
-    return find_image(ARENA_FIGHT_IMG)
+    return find_image(img)
 
 
 def imagesearch_loop(img, precision=0.8):
@@ -47,7 +43,7 @@ def imagesearch_count(img, precision=0.6):
 
 # searches for two images at the same time
 def two_image_search_loop(image1, image2):
-    print("Looking for " + image1 + " and " + image2 + "...")
+    print("Looking for " + image1 + " or " + image2 + "...")
     pos = s.imagesearch(image1)
     while pos[0] == -1:
         pos = s.imagesearch(image2)
@@ -66,12 +62,25 @@ def width_and_height_of_img(img):
     return s.width_and_height_of_img(img)
 
 
-def find_and_click_image(img):
-    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10)
+def find_and_click_image(img, precision=0.8):
+    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10, precision)
     time.sleep(DEFAULT_RANDOM_TIME)
     if pos[0] != -1:
         print("position : ", pos[0], pos[1])
-        s.click_image(img, pos, "left", 0)
+        s.click_image(img, pos, "left")
+    else:
+        print("image not found: " + img)
+        pyautogui.hotkey('alt', 'f10')
+    time.sleep(DEFAULT_RANDOM_TIME)
+
+
+def find_and_click_next_to_image(img, x_offset=0, y_offset=0, precision=0.8):
+    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10, precision)
+    time.sleep(DEFAULT_RANDOM_TIME)
+    if pos[0] != -1:
+        print("position : ", pos[0], pos[1])
+        pos = (pos[0] + x_offset, pos[1] + y_offset)
+        s.click_image(img, pos, "left")
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
@@ -84,22 +93,22 @@ def find_and_click_image_in_area(img, x, y):
     time.sleep(DEFAULT_RANDOM_TIME)
     if pos[0] != -1:
         print("position : ", pos[0], pos[1])
-        s.click_image(img, [x, y], "left", 0)
+        s.click_image(img, [x, y], "left")
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
-def click_if_is_not_selected(img):
-    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10)
+def click_if_is_not_selected(img, precision=0.8):
+    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10, precision)
     time.sleep(DEFAULT_RANDOM_TIME)
     if pos[0] != -1:
         print("position : ", pos[0], pos[1])
         # search directly left of image
         checkbox_pos = s.imagesearcharea(CHECKED_BOX_IMG, pos[0] - 60, pos[1], pos[0], pos[1] + 60)
         if checkbox_pos[0] == -1:
-            s.click_image(img, pos, "left", 0)
+            s.click_image(img, pos, "left")
     else:
         print("image not found: " + img)
         pyautogui.hotkey('alt', 'f10')
@@ -132,6 +141,9 @@ def click_anywhere_on_screen(action="left"):
     click_area(0, 0, 1920, 1080, action)
 
 
+# game specific
+
+
 # returns true or false depending on stage clear
 def stage_clear(count_dict):
     if two_image_search_loop(STAGE_CLEAR_IMG, STAGE_FAILED_IMG) == STAGE_FAILED_IMG:
@@ -153,9 +165,9 @@ def stage_clear(count_dict):
     # time.sleep(DEFAULT_WAIT_TIME)
 
 
-def stage_start_checks(replenish_energy, count_dict={}):
+def stage_start_checks(replenish_energy, replenish_energy_method, count_dict={}):
     # energy check
-    energy_check(replenish_energy, count_dict)
+    __energy_check(replenish_energy, replenish_energy_method, count_dict)
 
     # inventory check
     if find_image(INSUFFICIENT_INVENTORY_IMG):
@@ -169,20 +181,35 @@ def stage_start_checks(replenish_energy, count_dict={}):
         time.sleep(DEFAULT_RANDOM_TIME)
 
 
-def energy_check(replenish_energy, count_dict):
+def __energy_check(replenish_energy, replenish_energy_method, count_dict):
     if replenish_energy and find_image(INSUFFICIENT_ENERGY_IMG):
-        find_and_click_image(LEIF_IMG)
-        find_and_click_image(BUY_IMG)
-        find_and_click_image(START_IMG)
+        __replenish_energy(replenish_energy_method)
         if count_dict:
             count_dict['refresh_count'] = count_dict['refresh_count'] + 1
-        #     find_and_click_image("skystone.png")
-        #     find_and_click_image("buy.png")
-        #     find_and_click_image(START_IMG)
-        #     refresh_count = refresh_count + 1
 
         time.sleep(DEFAULT_RANDOM_TIME)
     return count_dict
+
+
+def __replenish_energy(replenish_energy_method):
+    if replenish_energy_method == "mail":
+        find_and_click_image(CANCEL_IMG)
+        find_and_click_image(READY_IMG)
+        find_and_click_image(LOBBY_IMG)
+        find_and_click_image(MAIL_IMG)
+        if not scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, -1):
+            scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, 1)
+        find_and_click_next_to_image(ENERGY_IMG, x_offset=150)
+        find_and_click_image(MAIL_IMG)
+        #TODO: lobby to where at previously
+    if replenish_energy_method == "leif":
+        find_and_click_image(LEIF_IMG)
+        find_and_click_image(BUY_IMG)
+        find_and_click_image(START_IMG)
+    if replenish_energy_method == "skystone":
+        find_and_click_image("skystone.png")
+        find_and_click_image("buy.png")
+        find_and_click_image(START_IMG)
 
 
 def stage_end_checks(refill_fodder=False):

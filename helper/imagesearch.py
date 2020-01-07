@@ -75,7 +75,7 @@ time : time taken for the mouse to move from where it was to the new position
 '''
 
 
-def click_image(image, pos, action="left", offset=8):
+def click_image(image, pos, action="left"):
     img = cv2.imread(image)
     height, width, channels = img.shape
     height_margin = height / 4

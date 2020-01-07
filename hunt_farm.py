@@ -2,14 +2,14 @@ from helper.helper_functions import *
 from adventure_farm import replace_fodder
 
 
-def hunt_loop(replenish_energy=False, remaining_runs=-1):
+def hunt_loop(replenish_energy=False, replenish_energy_method=None, remaining_runs=-1):
     count_dict = {'total_runs': 0, 'failed_runs': 0, 'refresh_count': 0}
 
     while remaining_runs < 0 or remaining_runs > 0:
         if remaining_runs > 0:
             print("runs remaining: " + str(remaining_runs))
         find_and_click_image(START_IMG)
-        stage_start_checks(replenish_energy, count_dict)
+        stage_start_checks(replenish_energy, replenish_energy_method, count_dict)
         if not stage_clear(count_dict):
             find_and_click_image(TRY_AGAIN_IMG)
             continue
@@ -28,4 +28,4 @@ def hunt_loop(replenish_energy=False, remaining_runs=-1):
 
 
 if __name__ == '__main__':
-    hunt_loop(True, 5)
+    hunt_loop(True)

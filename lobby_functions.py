@@ -34,5 +34,6 @@ def lobby_to_sidestory():
     find_and_click_image(SIDE_STORY_ICON_IMG)
     find_and_click_image(ADVENTURE_IMG)
     find_and_click_image(READY_IMG)
+    find_and_click_image(SELECT_SUPPORTER_IMG)
     find_and_click_image(SELECT_TEAM_IMG)
     return
