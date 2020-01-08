@@ -1,6 +1,6 @@
 import pyautogui
 import time
-from helper.helper_functions import *
+from util.gui_util import *
 from adventure_farm import *
 
 
@@ -41,12 +41,10 @@ WAIT_TIME_FOR_TRANSITIONS = 5
 # find_and_click_image(BATTLE_INVENTORY_IMG)
 # find_and_click_image(FARM_FODDER_STAGE3_IMG)
 # find_and_click_image(CONFIRM_IMG)
-# time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+# time.sleep(WAIT_TIME_FOR_TRANSITIONS
 
 
-# promote_fodder()
 
-
-replace_fodder(2)
+#replace_fodder(2)
 
 # print(find_image(PROMOTION_IMG))

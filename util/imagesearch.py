@@ -48,8 +48,7 @@ def imagesearcharea(image, x1, y1, x2, y2, precision=0.8, im=None):
         im = region_grabber(region=(x1, y1, x2, y2))
         if is_retina:
             im.thumbnail((round(im.size[0] * 0.5), round(im.size[1] * 0.5)))
-        im.save(
-            'test_area.png')  # usefull for debugging purposes, this will save the captured region as "test_area.png"
+        im.save('.\\Pictures\\test\\test_area.png')  # usefull for debugging purposes, this will save the captured region as "test_area.png"
 
     img_rgb = np.array(im)
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
@@ -83,7 +82,7 @@ def click_image(image, pos, action="left"):
 
     im = region_grabber(region=(
     pos[0] + width_margin, pos[1] + height_margin, pos[0] + width - width_margin, pos[1] + height - height_margin))
-    im.save('image_click.png')
+    im.save('.\\Pictures\\test\\image_click.png')
     pyautogui.moveTo(r(pos[0] + width_margin, width - 2 * width_margin),
                      r(pos[1] + height_margin, height - 2 * height_margin))
     # pyautogui.moveTo(pos[0] + r(width / 2, offset), pos[1] + r(height / 2, offset))
@@ -103,10 +102,10 @@ the top left corner coordinates of the element if found as an array [x,y] or [-1
 
 def imagesearch(image, precision=0.8):
     im = pyautogui.screenshot()
-    im2 = pyautogui.screenshot('my_screenshot.png')
+    im2 = pyautogui.screenshot('.\\Pictures\\test\\my_screenshot.png')
     if is_retina:
         im.thumbnail((round(im.size[0] * 0.5), round(im.size[1] * 0.5)))
-    # im.save('testarea.png') useful for debugging purposes, this will save the captured region as "testarea.png"
+    # im.save('.\\Pictures\\test\\testarea.png') useful for debugging purposes, this will save the captured region as "testarea.png"
     img_rgb = np.array(im)
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
     template = cv2.imread(image, 0)
@@ -226,7 +225,7 @@ def imagesearch_count(image, precision=0.9):
         count = count + 1
         old_pts.append(pt)
         image_loc.append(pt)
-    cv2.imwrite('result.png', img_rgb)  # Uncomment to write output image with boxes drawn around occurances
+    cv2.imwrite('.\\Pictures\\test\\result.png', img_rgb)  # Uncomment to write output image with boxes drawn around occurances
     return count, image_loc
 
 

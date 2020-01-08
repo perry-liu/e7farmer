@@ -1,11 +1,13 @@
 import time
 from image_strings import *
-from helper.helper_functions import (find_and_click_image, imagesearch_region_loop, imagesearch_count,
-                                     click_if_is_not_selected, find_image, stage_start_checks,
-                                     click_anywhere_on_screen, two_image_search_loop, stage_end_checks, click_pos)
-from lobby_functions import lobby_to_adventure, lobby_to_sidestory, lobby_to_world_adventure
+from util.gui_util import (find_and_click_image, imagesearch_region_loop, imagesearch_count,
+                           click_if_is_not_selected, find_image,
+                           click_anywhere_on_screen, two_image_search_loop, click_pos)
+from util.adventure_util import stage_start_checks, stage_end_checks
+from util.lobby_util import lobby_to
+from util.enum_classes import battle_type
 
-DEFAULT_WAIT_TIME = 2
+DEFAULT_RANDOM_TIME = s.r(2, 1)
 WAIT_TIME_FOR_TRANSITIONS = 6
 
 
@@ -16,7 +18,7 @@ def search_for_boss_battle():
 def farm_fodder():
     find_and_click_image(BATTLE_INVENTORY_IMG)
     time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-    time.sleep(DEFAULT_WAIT_TIME)
+    time.sleep(DEFAULT_RANDOM_TIME)
     find_and_click_image(FARM_FODDER_STAGE1_IMG)
     find_and_click_image(CONFIRM_IMG)
     time.sleep(WAIT_TIME_FOR_TRANSITIONS)
@@ -75,7 +77,7 @@ def replace_fodder(fodder_count_to_level):
                 find_and_click_image(element_list[j - 1])
             click_if_is_not_selected(hero_element, .9)
             find_and_click_image(HERO_SORT_IMG)
-            time.sleep(DEFAULT_WAIT_TIME)
+            time.sleep(DEFAULT_RANDOM_TIME)
             if not find_image(LEVEL_ONE_IMG):
                 find_and_click_image(HERO_SORT_IMG)
                 continue
@@ -96,36 +98,6 @@ def replace_fodder(fodder_count_to_level):
             find_and_click_image(element_list[-1])
             continue
         break
-
-def promote_fodder():
-    # find all max level 2 star heroes
-    find_and_click_image(HERO_SORT_IMG)
-    click_if_is_not_selected(TWO_STARS_IMG)
-    find_and_click_image(LEVEL_IMG)
-    find_and_click_image(HERO_SORT_IMG)
-    if find_image(SORT_LOWEST_LEVEL_IMG):
-        find_and_click_image(LEVEL_IMG)
-    else:
-        find_and_click_image(HERO_SORT_IMG)
-
-    time.sleep(DEFAULT_WAIT_TIME)
-    while find_image(MAX_FODDER_IMG):
-        find_and_click_image(PROMOTION_IMG)
-        find_and_click_image(HERO_SORT_IMG)
-        if find_image(SORT_LOWEST_LEVEL_IMG):
-            find_and_click_image(HERO_SORT_IMG)
-        else:
-            find_and_click_image(LEVEL_IMG)
-        find_and_click_image(LEVEL_ONE_IMG)
-        find_and_click_image(LEVEL_ONE_IMG)
-        find_and_click_image(PROMOTION_IMG)
-        find_and_click_image(CONFIRM_IMG)
-        time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-        if find_image(TAP_TO_CLOSE_IMG):
-            click_anywhere_on_screen()
-        find_and_click_image(HERO_SORT_IMG)
-        find_and_click_image(LEVEL_IMG)
-        time.sleep(DEFAULT_WAIT_TIME)
 
 
 def __run_adventure(need_to_replace_fodder, fodder_count_to_level, replenish_energy, replenish_energy_method,
@@ -203,16 +175,11 @@ def adventure_loop(adventure_type, replenish_energy=False, replenish_energy_meth
             need_to_replace_fodder = __run_adventure(need_to_replace_fodder, fodders_to_level, replenish_energy,
                                                      replenish_energy_method,
                                                      count_dict)
-        time.sleep(DEFAULT_WAIT_TIME)
+        time.sleep(DEFAULT_RANDOM_TIME)
         if find_image(URGENT_MISSION_IMG):
             need_to_replace_fodder = __clear_urgent_mission(need_to_replace_fodder, fodders_to_level, replenish_energy,
                                                             replenish_energy_method)
-            if adventure_type == "side_story":
-                lobby_to_sidestory()
-            elif adventure_type == "adventure":
-                lobby_to_adventure()
-            elif adventure_type == "world_adventure":
-                lobby_to_world_adventure()
+            lobby_to(adventure_type)
 
         if lab_instructions:
             find_and_click_image(READY_IMG)
@@ -227,4 +194,4 @@ def adventure_loop(adventure_type, replenish_energy=False, replenish_energy_meth
 
 if __name__ == '__main__':
     # adventure_loop("world_adventure", False, 3, lab_instructions=farm_fodder)
-    adventure_loop("side_story", False, fodders_to_level=2)
+    adventure_loop(battle_type.side_story, False, fodders_to_level=2)

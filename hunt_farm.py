@@ -1,5 +1,5 @@
-from helper.helper_functions import *
-from adventure_farm import replace_fodder
+from util.gui_util import *
+from util.adventure_util import stage_start_checks, stage_end_checks, stage_clear
 
 
 def hunt_loop(replenish_energy=False, replenish_energy_method=None, remaining_runs=-1):

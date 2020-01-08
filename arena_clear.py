@@ -1,6 +1,4 @@
-import pyautogui
-import time
-from helper.helper_functions import *
+from util.gui_util import *
 
 DEFAULT_RANDOM_TIME = r(1, 1)
 
