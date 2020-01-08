@@ -8,6 +8,7 @@ class battle_type(enum.Enum):
     hunt = 4
     altar = 5
     normal_raid = 6
+    fodder_farm = 7
 
 
 class refresh_energy_methods(enum.Enum):

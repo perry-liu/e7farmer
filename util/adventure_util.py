@@ -63,6 +63,8 @@ def stage_start_checks(replenish_energy, replenish_energy_method, adventure_type
         # if too many heroes
         find_and_click_image(ARRANGE_IMG)
         promote_fodder()
+        find_and_click_image(MAIN_MENU_IMG)
+        find_and_click_image(LOBBY_FROM_MENU_IMG)
         lobby_to(adventure_type)
         # if too many equips
         return

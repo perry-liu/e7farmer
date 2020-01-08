@@ -28,7 +28,10 @@ WAIT_TIME_FOR_TRANSITIONS = 5
 # time.sleep(WAIT_TIME_FOR_TRANSITIONS)
 # lobby_to_sidestory()
 
-
+find_and_click_image(MAIN_MENU_IMG)
+find_and_click_image(LOBBY_FROM_MENU_IMG)
+time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+lobby_to(battle_type.side_story)
 
 # find_and_click_image(BATTLE_INVENTORY_IMG)
 # find_and_click_image(FARM_FODDER_STAGE1_IMG)

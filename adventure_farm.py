@@ -1,6 +1,6 @@
 import time
 from image_strings import *
-from util.gui_util import (find_and_click_image, imagesearch_region_loop, imagesearch_count,
+from util.gui_util import (s, find_and_click_image, imagesearch_region_loop, imagesearch_count,
                            click_if_is_not_selected, find_image,
                            click_anywhere_on_screen, two_image_search_loop, click_pos)
 from util.adventure_util import stage_start_checks, stage_end_checks
@@ -101,13 +101,13 @@ def replace_fodder(fodder_count_to_level):
 
 
 def __run_adventure(need_to_replace_fodder, fodder_count_to_level, replenish_energy, replenish_energy_method,
-                    count_dict=None):
+                    adventure_type, count_dict=None):
     click_if_is_not_selected(REPEAT_CHECKBOX_IMG)
     if need_to_replace_fodder:
         replace_fodder(fodder_count_to_level)
         need_to_replace_fodder = False
     find_and_click_image(START_IMG)
-    stage_start_checks(replenish_energy, replenish_energy_method, count_dict)
+    stage_start_checks(replenish_energy, replenish_energy_method, adventure_type, count_dict)
 
     search_for_boss_battle()
     find_and_click_image(STOP_REPEAT_BATTLING_IMG)
@@ -129,13 +129,13 @@ def __run_adventure(need_to_replace_fodder, fodder_count_to_level, replenish_ene
 
 
 def __run_lab_adventure(lab_instructions, need_to_replace_fodder, fodder_count_to_level, replenish_energy,
-                        replenish_energy_method,
+                        replenish_energy_method, adventure_type,
                         count_dict=None):
     if need_to_replace_fodder:
         replace_fodder(fodder_count_to_level)
         need_to_replace_fodder = False
     find_and_click_image(START_IMG)
-    stage_start_checks(replenish_energy, replenish_energy_method, count_dict)
+    stage_start_checks(replenish_energy, replenish_energy_method, adventure_type, count_dict)
 
     lab_instructions()
 
@@ -150,11 +150,12 @@ def __run_lab_adventure(lab_instructions, need_to_replace_fodder, fodder_count_t
     return need_to_replace_fodder
 
 
-def __clear_urgent_mission(need_to_replace_fodder, fodders_to_level, replenish_energy, replenish_energy_method):
+def __clear_urgent_mission(need_to_replace_fodder, fodders_to_level, replenish_energy, replenish_energy_method,
+                           adventure_type):
     find_and_click_image(GO_IMG)
     find_and_click_image(SELECT_TEAM_IMG)
     need_to_replace_fodder = __run_adventure(need_to_replace_fodder, fodders_to_level, replenish_energy,
-                                             replenish_energy_method)
+                                             replenish_energy_method, adventure_type)
     find_and_click_image(LOBBY_IMG)
     time.sleep(WAIT_TIME_FOR_TRANSITIONS)
     return need_to_replace_fodder
@@ -170,15 +171,16 @@ def adventure_loop(adventure_type, replenish_energy=False, replenish_energy_meth
             print("runs remaining: " + str(remaining_runs))
         if lab_instructions:
             need_to_replace_fodder = __run_lab_adventure(lab_instructions, need_to_replace_fodder, fodders_to_level,
-                                                         replenish_energy, replenish_energy_method, count_dict)
+                                                         replenish_energy, replenish_energy_method, adventure_type,
+                                                         count_dict)
         else:
             need_to_replace_fodder = __run_adventure(need_to_replace_fodder, fodders_to_level, replenish_energy,
-                                                     replenish_energy_method,
+                                                     replenish_energy_method, adventure_type,
                                                      count_dict)
         time.sleep(DEFAULT_RANDOM_TIME)
         if find_image(URGENT_MISSION_IMG):
             need_to_replace_fodder = __clear_urgent_mission(need_to_replace_fodder, fodders_to_level, replenish_energy,
-                                                            replenish_energy_method)
+                                                            replenish_energy_method, adventure_type)
             lobby_to(adventure_type)
 
         if lab_instructions:
@@ -193,5 +195,5 @@ def adventure_loop(adventure_type, replenish_energy=False, replenish_energy_meth
 
 
 if __name__ == '__main__':
-    # adventure_loop("world_adventure", False, 3, lab_instructions=farm_fodder)
-    adventure_loop(battle_type.side_story, False, fodders_to_level=2)
+    adventure_loop(battle_type.fodder_farm, False, 3, lab_instructions=farm_fodder)
+    #adventure_loop(battle_type.side_story, False, fodders_to_level=2)
