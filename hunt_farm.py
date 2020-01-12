@@ -1,6 +1,6 @@
 from util.gui_util import *
 from util.adventure_util import stage_start_checks, stage_end_checks, stage_clear
-from util.enum_classes import battle_type
+from const.enum_classes import battle_type, refresh_energy_method
 
 
 def hunt_loop(replenish_energy=False, replenish_energy_method=None, remaining_runs=-1):
@@ -29,4 +29,4 @@ def hunt_loop(replenish_energy=False, replenish_energy_method=None, remaining_ru
 
 
 if __name__ == '__main__':
-    hunt_loop(True)
+    hunt_loop(True, replenish_energy_method=refresh_energy_method.leif, remaining_runs=50)

@@ -1,10 +1,11 @@
+from const.enum_classes import battle_type, refresh_energy_method
 from util.gui_util import *
 from util.lobby_util import *
 
 
-def __energy_check(replenish_energy, replenish_energy_method, count_dict):
+def __energy_check(replenish_energy, replenish_energy_method, adventure_type, count_dict):
     if replenish_energy and find_image(INSUFFICIENT_ENERGY_IMG):
-        __replenish_energy(replenish_energy_method)
+        __replenish_energy(replenish_energy_method, adventure_type)
         if count_dict:
             count_dict['refresh_count'] = count_dict['refresh_count'] + 1
 
@@ -12,24 +13,27 @@ def __energy_check(replenish_energy, replenish_energy_method, count_dict):
     return count_dict
 
 
-def __replenish_energy(replenish_energy_method):
-    if replenish_energy_method == "mail":
+def __replenish_energy(method, adventure_type):
+    if method == refresh_energy_method.mail:
         find_and_click_image(CANCEL_IMG)
-        find_and_click_image(READY_IMG)
+        find_and_click_image(BACK_ARROW_IMG)
         find_and_click_image(LOBBY_IMG)
         find_and_click_image(MAIL_IMG)
         if not scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, -1):
             scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, 1)
         find_and_click_next_to_image(ENERGY_IMG, x_offset=150)
         find_and_click_image(MAIL_IMG)
-        # TODO: lobby to where at previously
-    if replenish_energy_method == "leif":
+        find_and_click_image(MAIN_MENU_IMG)
+        find_and_click_image(LOBBY_FROM_MENU_IMG)
+        lobby_to(adventure_type)
+        find_and_click_image(START_IMG)
+    if method == refresh_energy_method.leif:
         find_and_click_image(LEIF_IMG)
         find_and_click_image(BUY_IMG)
         find_and_click_image(START_IMG)
-    if replenish_energy_method == "skystone":
-        find_and_click_image("skystone.png")
-        find_and_click_image("buy.png")
+    if method == refresh_energy_method.skystone:
+        find_and_click_image(SKYSTONE_IMG)
+        find_and_click_image(BUY_IMG)
         find_and_click_image(START_IMG)
 
 
@@ -55,19 +59,21 @@ def stage_clear(count_dict):
 
 
 def stage_start_checks(replenish_energy, replenish_energy_method, adventure_type, count_dict={}):
+    time.sleep(DEFAULT_RANDOM_TIME)
     # energy check
-    __energy_check(replenish_energy, replenish_energy_method, count_dict)
+    __energy_check(replenish_energy, replenish_energy_method, adventure_type, count_dict)
 
     # inventory check
     if find_image(INSUFFICIENT_INVENTORY_IMG):
-        # if too many heroes
-        find_and_click_image(ARRANGE_IMG)
-        promote_fodder()
-        find_and_click_image(MAIN_MENU_IMG)
-        find_and_click_image(LOBBY_FROM_MENU_IMG)
-        lobby_to(adventure_type)
+        if find_image(FULL_HERO_INVENTORY_IMG):
+            # if too many heroes
+            find_and_click_image(ARRANGE_IMG)
+            promote_fodder()
+            find_and_click_image(MAIN_MENU_IMG)
+            find_and_click_image(LOBBY_FROM_MENU_IMG)
+            lobby_to(adventure_type)
+            find_and_click_image(START_IMG)
         # if too many equips
-        return
 
     # high combat power check
     if find_image(BATTLE_GUIDE_IMG):
@@ -103,23 +109,32 @@ def promote_fodder():
         find_and_click_image(HERO_SORT_IMG)
 
     time.sleep(DEFAULT_RANDOM_TIME)
-    while find_image(MAX_FODDER_IMG):
+    promote_count = 0
+    while find_image(MAX_FODDER_IMG) and promote_count < 15:
         find_and_click_image(PROMOTION_IMG)
+        time.sleep(WAIT_TIME_FOR_TRANSITIONS)
         find_and_click_image(HERO_SORT_IMG)
         if find_image(SORT_LOWEST_LEVEL_IMG):
             find_and_click_image(HERO_SORT_IMG)
         else:
             find_and_click_image(LEVEL_IMG)
-        find_and_click_image(LEVEL_ONE_IMG)
-        find_and_click_image(LEVEL_ONE_IMG)
+        if not find_and_click_image(LEVEL_ONE_IMG) or not find_and_click_image(LEVEL_ONE_IMG):
+            break
         find_and_click_image(PROMOTION_IMG)
         find_and_click_image(CONFIRM_IMG)
-        time.sleep(WAIT_TIME_FOR_TRANSITIONS)
+        imagesearch_loop(TAP_TO_CLOSE_IMG)
         if find_image(TAP_TO_CLOSE_IMG):
             click_anywhere_on_screen()
+        time.sleep(DEFAULT_RANDOM_TIME)
         find_and_click_image(HERO_SORT_IMG)
         find_and_click_image(LEVEL_IMG)
         time.sleep(DEFAULT_RANDOM_TIME)
+        promote_count = promote_count + 1
+        print(str(promote_count) + " promote count")
+
+
+def search_max_level_units():
+    imagesearch_region_loop(LEVEL_MAX_IMG, 1050, 850, 1300, 1000)
 
 
 def team_select(team_img):

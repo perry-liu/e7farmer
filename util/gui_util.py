@@ -1,15 +1,23 @@
 import pyautogui
 import time
 from util import imagesearch as s
-from image_strings import *
+from const.image_strings import *
 
-DEFAULT_RANDOM_TIME = s.r(2, 1)
+DEFAULT_RANDOM_TIME = s.r(1, 1)
 
 WAIT_TIME_FOR_TRANSITIONS = 5
 
 
 def find_image(img, precision=0.8):
     pos = s.imagesearch(img, precision)
+    if pos[0] != -1:
+        return pos
+    else:
+        return False
+
+
+def find_image_in_area(img, x1, y1, x2, y2, precision=0.8):
+    pos = s.imagesearcharea(img, x1, y1, x2, y2, precision)
     if pos[0] != -1:
         return pos
     else:
@@ -68,9 +76,10 @@ def find_and_click_image(img, precision=0.8):
     if pos[0] != -1:
         print("position : ", pos[0], pos[1])
         s.click_image(img, pos, "left")
+        return True
     else:
         print("image not found: " + img)
-        pyautogui.hotkey('alt', 'f10')
+        return False
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
@@ -81,9 +90,10 @@ def find_and_click_next_to_image(img, x_offset=0, y_offset=0, precision=0.8):
         print("position : ", pos[0], pos[1])
         pos = (pos[0] + x_offset, pos[1] + y_offset)
         s.click_image(img, pos, "left")
+        return True
     else:
         print("image not found: " + img)
-        pyautogui.hotkey('alt', 'f10')
+        return False
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
@@ -139,5 +149,3 @@ def click_area(x1, y1, x2, y2, action="left"):
 
 def click_anywhere_on_screen(action="left"):
     click_area(0, 0, 1920, 1080, action)
-
-

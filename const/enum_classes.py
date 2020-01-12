@@ -11,7 +11,8 @@ class battle_type(enum.Enum):
     fodder_farm = 7
 
 
-class refresh_energy_methods(enum.Enum):
+class refresh_energy_method(enum.Enum):
     leif = 1
     skystone = 2
     mail = 3
+    all = 4

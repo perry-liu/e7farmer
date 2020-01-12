@@ -1,11 +1,11 @@
 import time
-from image_strings import *
-from util.gui_util import (s, find_and_click_image, imagesearch_region_loop, imagesearch_count,
+from const.image_strings import *
+from const.enum_classes import battle_type, refresh_energy_method
+from util.gui_util import (s, find_and_click_image, find_image_in_area, imagesearch_region_loop, imagesearch_count,
                            click_if_is_not_selected, find_image,
                            click_anywhere_on_screen, two_image_search_loop, click_pos)
 from util.adventure_util import stage_start_checks, stage_end_checks
 from util.lobby_util import lobby_to
-from util.enum_classes import battle_type
 
 DEFAULT_RANDOM_TIME = s.r(2, 1)
 WAIT_TIME_FOR_TRANSITIONS = 6
@@ -120,9 +120,11 @@ def __run_adventure(need_to_replace_fodder, fodder_count_to_level, replenish_ene
     find_and_click_image(CLOSE_IMG)
     click_anywhere_on_screen()
     stage_end_checks()
-    count, pt = imagesearch_count(LEVEL_MAX_IMG)
-    print(str(count) + " number of max level units")
-    if count > 2 and fodder_count_to_level > 0:
+    # count, pt = imagesearch_count(LEVEL_MAX_IMG)
+    # print(str(count) + " number of max level units")
+    # if count > 2 and fodder_count_to_level > 0:
+    if find_image_in_area(LEVEL_MAX_IMG, 1050, 850, 1300, 1000):
+        print("will replace fodder next round")
         need_to_replace_fodder = True
     find_and_click_image(CONFIRM_IMG)
     return need_to_replace_fodder
@@ -144,7 +146,8 @@ def __run_lab_adventure(lab_instructions, need_to_replace_fodder, fodder_count_t
     stage_end_checks()
     count, pt = imagesearch_count(LEVEL_MAX_IMG)
     print(str(count) + " number of max level units")
-    if count > 1 and fodder_count_to_level > 0:
+    if count > 2 and fodder_count_to_level > 0:
+        print("will replace fodder next round")
         need_to_replace_fodder = True
     find_and_click_image(CONFIRM_IMG)
     return need_to_replace_fodder
@@ -157,7 +160,6 @@ def __clear_urgent_mission(need_to_replace_fodder, fodders_to_level, replenish_e
     need_to_replace_fodder = __run_adventure(need_to_replace_fodder, fodders_to_level, replenish_energy,
                                              replenish_energy_method, adventure_type)
     find_and_click_image(LOBBY_IMG)
-    time.sleep(WAIT_TIME_FOR_TRANSITIONS)
     return need_to_replace_fodder
 
 
@@ -195,5 +197,5 @@ def adventure_loop(adventure_type, replenish_energy=False, replenish_energy_meth
 
 
 if __name__ == '__main__':
-    adventure_loop(battle_type.fodder_farm, False, 3, lab_instructions=farm_fodder)
-    #adventure_loop(battle_type.side_story, False, fodders_to_level=2)
+    # adventure_loop(battle_type.fodder_farm, False, fodders_to_level=3, lab_instructions=farm_fodder)
+    adventure_loop(battle_type.side_story, True, refresh_energy_method.leif, fodders_to_level=1, remaining_runs=3)

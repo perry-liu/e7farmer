@@ -1,6 +1,7 @@
 import pyautogui
 import time
 from util.gui_util import *
+from util.adventure_util import *
 from adventure_farm import *
 
 
@@ -28,10 +29,11 @@ WAIT_TIME_FOR_TRANSITIONS = 5
 # time.sleep(WAIT_TIME_FOR_TRANSITIONS)
 # lobby_to_sidestory()
 
-find_and_click_image(MAIN_MENU_IMG)
-find_and_click_image(LOBBY_FROM_MENU_IMG)
-time.sleep(WAIT_TIME_FOR_TRANSITIONS)
-lobby_to(battle_type.side_story)
+# count, pt = imagesearch_count(LEVEL_MAX_IMG);
+# print(str(count) + " number of max level units")
+
+find_image_in_area(LEVEL_MAX_IMG, 1050, 850, 1300, 1000)
+
 
 # find_and_click_image(BATTLE_INVENTORY_IMG)
 # find_and_click_image(FARM_FODDER_STAGE1_IMG)
