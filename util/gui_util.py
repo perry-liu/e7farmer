@@ -71,7 +71,7 @@ def width_and_height_of_img(img):
 
 
 def find_and_click_image(img, precision=0.8):
-    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 10, precision)
+    pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 5, precision)
     time.sleep(DEFAULT_RANDOM_TIME)
     if pos[0] != -1:
         print("position : ", pos[0], pos[1])
@@ -79,7 +79,15 @@ def find_and_click_image(img, precision=0.8):
         return True
     else:
         print("image not found: " + img)
-        return False
+        print("trying again")
+        pos = s.imagesearch_numLoop(img, DEFAULT_RANDOM_TIME, 5, precision)
+        time.sleep(DEFAULT_RANDOM_TIME)
+        if pos[0] != -1:
+            print("position : ", pos[0], pos[1])
+            s.click_image(img, pos, "left")
+            return True
+        else:
+            return False
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
@@ -106,7 +114,6 @@ def find_and_click_image_in_area(img, x, y):
         s.click_image(img, [x, y], "left")
     else:
         print("image not found: " + img)
-        pyautogui.hotkey('alt', 'f10')
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
@@ -121,14 +128,13 @@ def click_if_is_not_selected(img, precision=0.8):
             s.click_image(img, pos, "left")
     else:
         print("image not found: " + img)
-        pyautogui.hotkey('alt', 'f10')
     time.sleep(DEFAULT_RANDOM_TIME)
 
 
 # click position with random offset
 def click_pos(pos, action="left", offset=8):
     pyautogui.moveTo(r(pos[0], offset), r(pos[1], offset))
-    pyautogui.click(button=action)
+    s.click()
     return
 
 
@@ -144,7 +150,7 @@ def click_area(x1, y1, x2, y2, action="left"):
     im = s.region_grabber(region=(x1 + width_margin, y1 + height_margin, x2 - width_margin, y2 - height_margin))
     im.save('.\\Pictures\\test\\area_click.png')
     time.sleep(DEFAULT_RANDOM_TIME)
-    pyautogui.click(button=action)
+    s.click()
 
 
 def click_anywhere_on_screen(action="left"):

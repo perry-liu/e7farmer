@@ -1,6 +1,6 @@
 from const.enum_classes import battle_type, refresh_energy_method
 from util.gui_util import *
-from util.lobby_util import *
+from util.lobby_util import lobby_to, came_to_lobby, find_and_click_in_lobby
 
 
 def __energy_check(replenish_energy, replenish_energy_method, adventure_type, count_dict):
@@ -17,14 +17,16 @@ def __replenish_energy(method, adventure_type):
     if method == refresh_energy_method.mail:
         find_and_click_image(CANCEL_IMG)
         find_and_click_image(BACK_ARROW_IMG)
-        find_and_click_image(LOBBY_IMG)
-        find_and_click_image(MAIL_IMG)
-        if not scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, -1):
-            scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, 1)
+        find_and_click_image(BACK_IMG)
+        find_and_click_in_lobby(MAIL_IMG)
+        if not find_image(ENERGY_IMG):
+            if not scroll_and_find(find_image(TIME_LEFT_IMG), ENERGY_IMG, -1):
+                print("could not find energy in mail.")
         find_and_click_next_to_image(ENERGY_IMG, x_offset=150)
-        find_and_click_image(MAIL_IMG)
-        find_and_click_image(MAIN_MENU_IMG)
-        find_and_click_image(LOBBY_FROM_MENU_IMG)
+        find_and_click_in_lobby(MAIL_IMG)
+        time.sleep(DEFAULT_RANDOM_TIME)
+        find_and_click_in_lobby(MAIN_MENU_IMG)
+        find_and_click_in_lobby(LOBBY_FROM_MENU_IMG)
         lobby_to(adventure_type)
         find_and_click_image(START_IMG)
     if method == refresh_energy_method.leif:
@@ -59,7 +61,7 @@ def stage_clear(count_dict):
 
 
 def stage_start_checks(replenish_energy, replenish_energy_method, adventure_type, count_dict={}):
-    time.sleep(DEFAULT_RANDOM_TIME)
+    time.sleep(WAIT_TIME_FOR_TRANSITIONS)
     # energy check
     __energy_check(replenish_energy, replenish_energy_method, adventure_type, count_dict)
 
@@ -68,7 +70,7 @@ def stage_start_checks(replenish_energy, replenish_energy_method, adventure_type
         if find_image(FULL_HERO_INVENTORY_IMG):
             # if too many heroes
             find_and_click_image(ARRANGE_IMG)
-            promote_fodder()
+            promote_fodder(5)
             find_and_click_image(MAIN_MENU_IMG)
             find_and_click_image(LOBBY_FROM_MENU_IMG)
             lobby_to(adventure_type)
@@ -97,8 +99,9 @@ def stage_end_checks(refill_fodder=False):
         time.sleep(DEFAULT_RANDOM_TIME)
 
 
-def promote_fodder():
+def promote_fodder(max_fodder_to_promote=-1):
     # find all max level 2 star heroes
+    time.sleep(WAIT_TIME_FOR_TRANSITIONS)
     find_and_click_image(HERO_SORT_IMG)
     click_if_is_not_selected(TWO_STARS_IMG)
     find_and_click_image(LEVEL_IMG)
@@ -110,7 +113,7 @@ def promote_fodder():
 
     time.sleep(DEFAULT_RANDOM_TIME)
     promote_count = 0
-    while find_image(MAX_FODDER_IMG) and promote_count < 15:
+    while find_image(MAX_FODDER_IMG) and (max_fodder_to_promote < 0 or max_fodder_to_promote > 0):
         find_and_click_image(PROMOTION_IMG)
         time.sleep(WAIT_TIME_FOR_TRANSITIONS)
         find_and_click_image(HERO_SORT_IMG)
@@ -118,13 +121,18 @@ def promote_fodder():
             find_and_click_image(HERO_SORT_IMG)
         else:
             find_and_click_image(LEVEL_IMG)
-        if not find_and_click_image(LEVEL_ONE_IMG) or not find_and_click_image(LEVEL_ONE_IMG):
+        if not find_and_click_image(LEVEL_ONE_IMG):
+            print("no more lvl 1 fodder cards")
+            find_and_click_image(BACK_ARROW_IMG)
+            break
+        if not find_and_click_image(LEVEL_ONE_IMG):
+            print("no more lvl 1 fodder cards")
+            find_and_click_image(BACK_ARROW_IMG)
             break
         find_and_click_image(PROMOTION_IMG)
         find_and_click_image(CONFIRM_IMG)
-        imagesearch_loop(TAP_TO_CLOSE_IMG)
-        if find_image(TAP_TO_CLOSE_IMG):
-            click_anywhere_on_screen()
+        two_image_search_loop(TAP_TO_CLOSE_IMG, PROMOTION_FINISH_INDICATOR_IMG)
+        click_anywhere_on_screen()
         time.sleep(DEFAULT_RANDOM_TIME)
         find_and_click_image(HERO_SORT_IMG)
         find_and_click_image(LEVEL_IMG)
@@ -133,14 +141,76 @@ def promote_fodder():
         print(str(promote_count) + " promote count")
 
 
+def replace_fodder(fodder_count_to_level):
+    area_left = [494, 633]
+    area_bot = [619, 738]
+    area_right = [793, 618]
+
+    # get rid of fodders
+    for i in range(fodder_count_to_level):
+        if i == 0:
+            click_pos(area_left)
+        if i == 1:
+            click_pos(area_bot)
+        if i == 2:
+            click_pos(area_right)
+        time.sleep(DEFAULT_RANDOM_TIME)
+        find_and_click_image(SUBTRACT_HERO)
+
+    # sort by lowest lvl 2 star units
+    find_and_click_image(HERO_SORT_IMG)
+    click_if_is_not_selected(TWO_STARS_IMG)
+    if find_image(SORT_LOWEST_LEVEL_IMG):
+        find_and_click_image(HERO_SORT_IMG)
+    else:
+        find_and_click_image(LEVEL_IMG)
+        find_and_click_image(HERO_SORT_IMG)
+        if find_image(SORT_LOWEST_LEVEL_IMG):
+            find_and_click_image(HERO_SORT_IMG)
+        else:
+            find_and_click_image(LEVEL_IMG)
+
+    # try to find distinct fodder heroes, double for loop through type and element
+    type_list = [WARRIOR_ICON_IMG, KNIGHT_ICON_IMG, THIEF_ICON_IMG, RANGER_ICON_IMG, MAGE_ICON_IMG,
+                 SOUL_WEAVER_ICON_IMG]
+    element_list = [FIRE_ICON_IMG, ICE_ICON_IMG, WOOD_ICON_IMG, LIGHT_ICON_IMG, DARK_ICON_IMG]
+    fodders_replaced = 0
+    find_and_click_image(HERO_SORT_IMG)
+    for i, hero_type in enumerate(type_list):
+        if i > 0:
+            find_and_click_image(type_list[i - 1])
+        click_if_is_not_selected(hero_type)
+        for j, hero_element in enumerate(element_list):
+            if j > 0:
+                find_and_click_image(element_list[j - 1])
+            click_if_is_not_selected(hero_element, .9)
+            find_and_click_image(HERO_SORT_IMG)
+            time.sleep(DEFAULT_RANDOM_TIME)
+            if not find_image(LEVEL_ONE_IMG):
+                find_and_click_image(HERO_SORT_IMG)
+                continue
+            find_and_click_image(ADD_HERO_IMG)
+
+            if fodders_replaced == 0:
+                click_pos(area_left)
+            if fodders_replaced == 1:
+                click_pos(area_bot)
+            if fodders_replaced == 2:
+                click_pos(area_right)
+
+            fodders_replaced = fodders_replaced + 1
+            if fodders_replaced == fodder_count_to_level:
+                break
+            find_and_click_image(HERO_SORT_IMG)
+        else:
+            find_and_click_image(element_list[-1])
+            continue
+        break
+
+
 def search_max_level_units():
     imagesearch_region_loop(LEVEL_MAX_IMG, 1050, 850, 1300, 1000)
 
 
 def team_select(team_img):
     find_and_click_image(team_img)
-
-
-def go_to_lobby():
-    find_and_click_image(MAIN_MENU_IMG)
-    find_and_click_image(LOBBY_IMG)
